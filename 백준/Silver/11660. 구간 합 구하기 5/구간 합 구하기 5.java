@@ -1,5 +1,4 @@
 import java.io.BufferedReader;
-
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
@@ -19,6 +18,7 @@ public class Main {
         for(int i = 1; i<=N;i++) for(int j = 1; j<=N;j++)  dp[i][j]=dp[i-1][j]+dp[i][j-1]+arr[i][j]-dp[i-1][j-1];
         
         int fx,fy,sx,sy;
+        StringBuilder sb = new StringBuilder();
         for(int i=0; i<M; i++){
             st = new StringTokenizer(br.readLine());
             sx= Integer.parseInt(st.nextToken())-1;
@@ -26,8 +26,11 @@ public class Main {
             fx=Integer.parseInt(st.nextToken());
             fy=Integer.parseInt(st.nextToken());
             //System.out.println(dp[fx][fy]+", +"+dp[sx][sy]+", -"+dp[fx][sy]+", -"+dp[sx][fy]);
-            System.out.println(dp[fx][fy]+dp[sx][sy]-dp[fx][sy]-dp[sx][fy]);
+            sb.append(dp[fx][fy]+dp[sx][sy]-dp[fx][sy]-dp[sx][fy]);
+            sb.append('\n');
         }
+        System.out.print(sb);
+        
 
         //debug(arr);
         //debug(dp);
