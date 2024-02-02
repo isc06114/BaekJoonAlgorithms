@@ -66,7 +66,7 @@ public class Main {
 	}
 	
 	 //Fast IO
-    private static final int MAX_BUFFER_SIZE = 1<<32; 
+    private static final int MAX_BUFFER_SIZE = 1<<21; 
     private static DataInputStream inputStream;
     private static byte[] buffer;
     private static int curIdx, maxIdx;
