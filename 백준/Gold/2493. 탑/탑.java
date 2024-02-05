@@ -25,8 +25,14 @@ public class Main {
     }
 
 
-    static int cnt = 0;
+    static int cnt = 0, maxHeight = 0;
     static void lisUpdate(tower t){
+        if(t.height>maxHeight){
+            maxHeight = t.height;
+            lis[0] = t;
+            cnt = 0;
+            return;
+        }
         for(int i = cnt; i>=0; i--){
             if(t.height<lis[i].height){
                 lis[i+1] = t;
@@ -40,8 +46,6 @@ public class Main {
                 return;
             }
         }
-        lis[0] = t;
-        cnt = 0;
     }
 
 
