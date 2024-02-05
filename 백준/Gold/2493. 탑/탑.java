@@ -11,6 +11,7 @@ public class Main {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int N = Integer.parseInt(br.readLine());
+        StringBuilder sb = new StringBuilder();
         linkedTower = new int[N+1]; linkedTower[0] = 0; lis = new tower[N+1];
         lis[0] = new tower(0, 0);
         
@@ -20,8 +21,9 @@ public class Main {
         }
 
         for(int i = 1; i<=N;i++){
-            System.out.print(linkedTower[i]+" ");
+            sb.append(linkedTower[i]).append(' ');
         }
+        System.out.println(sb);
     }
 
 
