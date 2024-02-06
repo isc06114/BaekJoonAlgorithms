@@ -5,21 +5,20 @@ import java.io.IOException;
 public class Main {
 
 	static int R, C, Rotate, minL;
-    static int[][] arr, nextarr;
+    static int[][] arr;
 	public static void main(String[] args) throws IOException {
 		initFI();
         StringBuilder sb = new StringBuilder();
+        //N, M, R 입력
         R = nextInt(); C = nextInt(); Rotate = nextInt();
+        //Array 입력
         arr = new int[R][C];
-        nextarr = new int[R][C];
-        for(int row = 0; row < R; row++){
-            for(int col = 0; col < C; col++){
+        for(int row = 0; row < R; row++)
+            for(int col = 0; col < C; col++)
                 arr[row][col] = nextInt();
-            }
-        }
-
-        arr=rotates(Rotate,arr);
-
+        //함수 실행
+        rotates(arr);
+        //출력
         for(int row = 0; row < R; row++){
             for(int col = 0; col < C; col++){
                 sb.append(arr[row][col]).append(' ');
@@ -29,35 +28,36 @@ public class Main {
         System.out.println(sb);
 	}
 
-    static int[][] rotates(int n,int[][]array){
+    static void rotates(int[][]array){
         minL = Math.min(R,C)/2;
-        for(int i = 0; i<n;i++)
-            array = rotateArray(array);
-        return array;
+        for(int line = 0; line<minL;line++){
+            rotateLine(line,array);
+        }
     }
 
-    static int[][] rotateArray(int[][]array){
-        int[][]nextArray = new int[R][C];
-        for(int line = 0; line < minL; line++){
-            int top = line;
+    static void rotateLine(int line, int[][]array){
+        int top = line;
             int bottom = R-line-1;
             int left = line;
             int right = C-line-1;
-            for(int col = left; col <= right-1; col++){ //top
-                nextArray[top][col] = array[top][col+1];
+            int lineRotate = Rotate%(2*(R+C-4*line-2));
+            for(int i = 0; i < lineRotate; i++){
+                int temp = array[top][left];
+                for(int col = left; col <= right-1; col++){ //top
+                    array[top][col] = array[top][col+1];
+                }
+                for(int row = top; row <= bottom-1; row++){ //right
+                    array[row][right] = array[row+1][right];
+                }
+                for(int col = right; col >=left+1; col--){ //bottom
+                    array[bottom][col] = array[bottom][col-1];
+                }
+                for(int row = bottom; row >=top+2; row--){ //left
+                    array[row][left] = array[row-1][left];
+                }
+                array[top+1][left] = temp;
+                //debug(array);
             }
-            for(int row = top+1; row <= bottom; row++){ //left
-                nextArray[row][left] = array[row-1][left];
-            }
-            for(int col = left+1; col <= right; col++){ //bottom
-                nextArray[bottom][col] = array[bottom][col-1];
-            }
-            for(int row = top; row <= bottom-1; row++){ //right
-                nextArray[row][right] = array[row+1][right];
-            }
-        }
-        //debug(nextArray);
-        return nextArray;
     }
 
     static void debug(int[][] arr){
