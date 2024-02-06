@@ -17,7 +17,6 @@ public class Solution {
 	}
 
     public int TC() throws IOException{
-        int isPass = 1;
         StringTokenizer st;
         int maxSize = Integer.parseInt(br.readLine());
         int depth = (int)(Math.log(maxSize)/Math.log(2));
@@ -26,7 +25,10 @@ public class Solution {
             st = new StringTokenizer(br.readLine());
             st.nextToken();
             char c = st.nextToken().charAt(0);
-            if(c<='9'&& c>='0') isPass = 0;
+            if(c<='9'&& c>='0'){
+                getInput(maxSize-d-1);
+                return 0;
+            }
         }
         for(int d = (1<<(depth-1)); d<maxSize; d++){
             st = new StringTokenizer(br.readLine());
@@ -35,19 +37,40 @@ public class Solution {
             if(c>'9'||c<'0'){
                 if(st.hasMoreTokens()){
                     char c1 = st.nextToken().charAt(0);
-                    if(c1>'9'||c1<'0') isPass = 0;
+                    if(c1>'9'||c1<'0') {
+                        getInput(maxSize-d-1);
+                        return 0;
+                    }
                 }
-                else isPass = 0;
+                else {
+                    getInput(maxSize-d-1);
+                    return 0;
+                }
                 if(st.hasMoreTokens()){
                     char c1 = st.nextToken().charAt(0);
-                    if(c1>'9'||c1<'0') isPass = 0;
+                    if(c1>'9'||c1<'0') {
+                        getInput(maxSize-d-1);
+                        return 0;
+                    }
                 }
-                else isPass = 0;
+                else {
+                    getInput(maxSize-d-1);
+                    return 0;
+                }
             }
             else{
-                if(st.hasMoreTokens()) isPass = 0;
+                if(st.hasMoreTokens()) {
+                    getInput(maxSize-d-1);
+                    return 0;
+                }
             }
         }
-        return isPass;
+        return 1;
+    }
+
+    static void getInput(int n) throws IOException{
+        for(int i =0; i<n; i++){
+            br.readLine();
+        }
     }
 }
