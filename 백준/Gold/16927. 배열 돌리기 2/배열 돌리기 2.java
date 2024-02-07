@@ -37,27 +37,38 @@ public class Main {
 
     static void rotateLine(int line, int[][]array){
         int top = line;
-            int bottom = R-line-1;
-            int left = line;
-            int right = C-line-1;
-            int lineRotate = Rotate%(2*(R+C-4*line-2));
-            for(int i = 0; i < lineRotate; i++){
-                int temp = array[top][left];
-                for(int col = left; col <= right-1; col++){ //top
-                    array[top][col] = array[top][col+1];
-                }
-                for(int row = top; row <= bottom-1; row++){ //right
-                    array[row][right] = array[row+1][right];
-                }
-                for(int col = right; col >=left+1; col--){ //bottom
-                    array[bottom][col] = array[bottom][col-1];
-                }
-                for(int row = bottom; row >=top+2; row--){ //left
-                    array[row][left] = array[row-1][left];
-                }
-                array[top+1][left] = temp;
-                //debug(array);
-            }
+        int bottom = R-line-1;
+        int left = line;
+        int right = C-line-1;
+        int arrSize = 2*(R+C-4*line-2);
+        int[] arr = new int[arrSize];
+        int cnt = 0;
+        for(int col = left; col <= right-1; col++){ //top
+            arr[cnt++] = array[top][col];
+        }
+        for(int row = top; row <= bottom-1; row++){ //right
+            arr[cnt++] = array[row][right];
+        }
+        for(int col = right; col >=left+1; col--){ //bottom
+            arr[cnt++] = array[bottom][col];
+        }
+        for(int row = bottom; row >=top+1; row--){ //left
+            arr[cnt++] = array[row][left];
+        }
+        cnt=0;
+        for(int col = left; col <= right-1; col++){ //top
+            array[top][col] = arr[(Rotate+cnt++)%arrSize];
+        }
+        for(int row = top; row <= bottom-1; row++){ //right
+            array[row][right] = arr[(Rotate+cnt++)%arrSize];
+        }
+        for(int col = right; col >=left+1; col--){ //bottom
+            array[bottom][col] = arr[(Rotate+cnt++)%arrSize];
+        }
+        for(int row = bottom; row >=top+1; row--){ //left
+            array[row][left] = arr[(Rotate+cnt++)%arrSize];
+        }
+        
     }
 
     static void debug(int[][] arr){
