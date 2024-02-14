@@ -2,77 +2,30 @@ import java.io.DataInputStream;
 import java.io.IOException;
 
 public class Main {
-    static int N;
+    static int N, cnt = 0;
     public static void main(String[] args) throws IOException {
         initFI();
         N = nextInt();
-        System.out.println(simulate());
+        dfs(0,0,0,0);
+        System.out.println(cnt);
     }
-
-    static int count, visited[] = new int[15];
-    static boolean board[][];
-    static int simulate(){
-        //if(N==1) return 1;
-        //if(N==2||N==3) return 0;
-        count = 0;
-        board = new boolean[N][N];
-        greedy(0);
-        return count;
-    }
-
-    static void greedy(int n){
-        if(n==N){
-            ++count;
+    static void dfs(int row, int downBitMask, int leftBitMask, int rightBitMask){
+        if(row == N){
+            cnt++;
             return;
         }
-        for(int i = 0; i<N; i++){
-            if(board[n][i] == false){
-                visited[n] = i;
-                updateBoard(n);
-                //debug(n);
-                greedy(n+1);
-
-            
-            }
+        int bit = (~(downBitMask|leftBitMask|rightBitMask))&((1<<N)-1);
+        int colPos = (bit&-bit);       
+        // String debugStr = String.format("row: %d 배치 가능한 col: %05d pos: %05d",row,Integer.parseInt(Integer.toBinaryString(bit)), Integer.parseInt(Integer.toBinaryString(colPos)));
+        // System.out.println(debugStr);
+        while(bit>0){
+            dfs(row+1,downBitMask|colPos,(leftBitMask|colPos)<<1,(rightBitMask|colPos)>>1);
+            bit-=colPos;
+            colPos = (bit&-bit);
         }
+
     }
 
-    static void updateBoard(int row){
-        for(int f_row = 0; f_row <N; f_row++){
-            for(int f_col = 0; f_col <N; f_col++){
-                board[f_row][f_col] = false;
-            }
-        }
-        for(int i = 0; i<= row; i++){
-            updateBoard(i, visited[i]);
-        }
-    }
-
-    static int mappers[][] = {{1,0},{1,1},{1,-1}};
-    static void updateBoard(int row, int col){
-        board[row][col] = true;
-        for(int[] mapper:mappers){
-            int f_row = row+mapper[0]; int f_col = col+mapper[1];
-            while(!(f_row<0||f_row>=N||f_col<0||f_col>=N)){
-                board[f_row][f_col] = true;
-                f_row+=mapper[0];f_col+=mapper[1];
-            }
-        }
-    }
-
-    static void debug(int n){
-        System.out.println("Debug "+n);
-        for(int i =0; i<N;i++)
-            System.out.print(visited[i]+" ");
-        System.out.println();
-        for(int row = 0; row<N;row++){
-            for(int col =0; col<N; col++){
-                System.out.print(board[row][col]?"O ":"X ");
-            }
-            System.out.println();
-        }
-        System.out.println();
-    }
 
     	 //Fast IO
     private static final int MAX_BUFFER_SIZE = 2; 
