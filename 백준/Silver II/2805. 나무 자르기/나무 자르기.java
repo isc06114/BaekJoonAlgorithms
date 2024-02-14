@@ -1,7 +1,7 @@
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.util.Arrays;
-
+// 29,338 kb    1856 ms
 public class Main {
     static int N, M, cnt, trees[];
 
@@ -14,13 +14,36 @@ public class Main {
             trees[i] = nextInt();
         }
         Arrays.sort(trees);
-        int cnt = 0, height = trees[N-1], remain;
-        while(cnt<M){
-            height -=1;
+        int cnt = 0, temp,height;
+        temp = 1_000_000_000;
+        height = temp;
+        boolean pass = false;
+        while(temp>=1||!pass){
+            cnt = 0;
             for(int i = N-1; i>=0; i--){
                 if(height>=trees[i]) break;
-                cnt++;
+                cnt= cnt+(trees[i]-height);
+                if(cnt<0) {
+                    cnt = Integer.MAX_VALUE;
+                    break;
+                }
             }
+            //System.out.println("height:"+height+", temp:"+temp+", cnt: "+cnt);
+            temp = temp/2;
+            if(temp==0){
+                if(cnt>M && !pass) break;
+                temp=1;
+            }
+            if(cnt<M){
+                height -= temp;
+                pass = false;
+            }
+            else if(cnt>M){
+                height+=temp;
+                pass = true;
+            }
+            else break;
+
         }
         System.out.println(height);
     }
