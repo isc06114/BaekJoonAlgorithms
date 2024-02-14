@@ -16,12 +16,10 @@ public class Main {
         Arrays.sort(trees);
         int cnt = 0, height = trees[N-1], remain;
         while(cnt<M){
-            cnt = 0;
             height -=1;
             for(int i = N-1; i>=0; i--){
-                remain = trees[i] - height;
-                if(remain<=0) break;
-                cnt+=remain;
+                if(height>=trees[i]) break;
+                cnt++;
             }
         }
         System.out.println(height);
