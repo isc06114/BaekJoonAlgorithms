@@ -9,19 +9,21 @@ public class Main {
         dfs(0,0,0,0);
         System.out.println(cnt);
     }
-    static void dfs(int row, int downBitMask, int leftBitMask, int rightBitMask){
+    static void dfs(int row, int downBits, int leftBits, int rightBits){        //각각 열, 아랫방향이동, 왼쪽 이동, 오른쪽 이동
         if(row == N){
             cnt++;
             return;
         }
-        int bit = (~(downBitMask|leftBitMask|rightBitMask))&((1<<N)-1);
-        int colPos = (bit&-bit);       
+        int bitMask = (~(downBits|leftBits|rightBits))&((1<<N)-1);    //배치 가능한 장소를 1로 하는 bitMask 만들기
+        int colPos = (bitMask&-bitMask);            //1인 비트중 가장 오른쪽 비트 구하기
+        ////debug
         // String debugStr = String.format("row: %d 배치 가능한 col: %05d pos: %05d",row,Integer.parseInt(Integer.toBinaryString(bit)), Integer.parseInt(Integer.toBinaryString(colPos)));
         // System.out.println(debugStr);
-        while(bit>0){
-            dfs(row+1,downBitMask|colPos,(leftBitMask|colPos)<<1,(rightBitMask|colPos)>>1);
-            bit-=colPos;
-            colPos = (bit&-bit);
+
+        while(bitMask>0){       //더이상 방문할 비트가 없을 경우 break;
+            dfs(row+1,downBits|colPos,(leftBits|colPos)<<1,(rightBits|colPos)>>1);
+            bitMask-=colPos;        //방문한 비트 제거
+            colPos = (bitMask&-bitMask);    //방문할 비트 재지정
         }
 
     }
