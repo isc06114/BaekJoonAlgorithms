@@ -1,7 +1,7 @@
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.util.Arrays;
-// 29,338 kb    1856 ms
+// 24,224 kb    384 ms
 public class Main {
     static int N, M, cnt, trees[];
 
