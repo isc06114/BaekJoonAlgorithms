@@ -61,7 +61,7 @@ public class Solution {
 
 
     	 //Fast IO
-    private static final int MAX_BUFFER_SIZE = 2; 
+    private static final int MAX_BUFFER_SIZE = 1<<16; 
     private static DataInputStream inputStream;
     private static byte[] buffer;
     private static int curIdx, maxIdx;
