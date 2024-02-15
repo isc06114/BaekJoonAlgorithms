@@ -1,10 +1,12 @@
 import java.io.DataInputStream;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collections;
 
 //11,468 kb 340 ms
 public class Solution {
     static int T;
-    static int[] computerSet = new int[9];
+    static Integer[] computerSet = new Integer[9];
     static int player, computer, cnt,win,lose;
     static StringBuilder sb;
     public static void main(String[] args) throws IOException {
@@ -31,6 +33,7 @@ public class Solution {
             computer+= 1<<(b-1);
             computerSet[i] = b;
         }
+        Arrays.sort(computerSet,Collections.reverseOrder());
         player = ((~computer)&((1<<18)-1));
     }
 
