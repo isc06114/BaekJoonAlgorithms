@@ -19,13 +19,13 @@ public class Solution {
     }
     static void TC() throws IOException{
         initInput();
-        dfs(player,0,0);
+        dfs(player,0,0,171);
         sb.append(win).append(' ').append(lose).append('\n');
     }
 
     static void initInput()throws IOException{
         cnt =0; win =0; lose = 0;
-        computer = 0;
+        computer = 0; 
         for(int i =0; i<9; i++){
             int b = nextInt();
             computer+= 1<<(b-1);
@@ -34,17 +34,20 @@ public class Solution {
         player = ((~computer)&((1<<18)-1));
     }
 
-    static void dfs(int bitMask, int score, int cnt){
-        if(bitMask == 0||cnt==9){
-            if(score>0){
+    static void dfs(int bitMask, int score, int cnt, int total){
+        if(cnt==9){
+            if(score>0)
                 win++; 
-                //System.out.println("WIN");
-
-            }
-            else if(score<0){
+            else if(score<0)
                 lose++;
-                //System.out.println("Lose");
-            }
+            return;
+        }
+        if(Math.abs(score)>total){
+            int k = factorial(9-cnt);
+            if(score>0)
+                win+=k;
+            else if(score<0)
+                lose+=k;
             return;
         }
         int comb = bitMask;
@@ -53,10 +56,14 @@ public class Solution {
             int cardBit = (comb&-comb)&(1<<18)-1;
             int card = (int)(Math.log(cardBit)/Math.log(2))+1;
             //if(cnt == 0)System.out.println("cnt="+cnt+", comb="+comb+", cardBit="+cardBit+", card="+card+", computerCard="+computerSet[cnt]+", score:"+score);
-            int temp =card-computerSet[cnt];
-            dfs(bitMask - cardBit,score+((card-computerSet[cnt])<0?card+computerSet[cnt]:-card-computerSet[cnt]),cnt+1);
+            dfs(bitMask - cardBit,score+((card-computerSet[cnt])<0?card+computerSet[cnt]:-card-computerSet[cnt]),cnt+1,total-card-computerSet[cnt]);
             comb-=cardBit;
         }
+    }
+
+    static int factorial(int n){
+        if(n ==1) return 1;
+        return n*factorial(n-1);
     }
 
 
