@@ -10,7 +10,9 @@ public class Main {
 
     static StringTokenizer st;
     static int T,goal;
+    static StringBuilder sb;
     public static void main(String[] args) throws IOException {
+        sb = new StringBuilder();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         Main user = new Main();
         T = Integer.parseInt(br.readLine());
@@ -20,6 +22,7 @@ public class Main {
             goal = Integer.parseInt(st.nextToken());
             user.TC(register);
         }
+        System.out.println(sb);
 
     }
 
@@ -59,7 +62,7 @@ public class Main {
                 }
             }
         }
-        System.out.println(dp[goal]);
+        sb.append(dp[goal]).append('\n');
     }
 
     int cmdL(int register){
