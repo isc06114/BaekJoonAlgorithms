@@ -35,10 +35,10 @@ public class Solution {
             int second = Integer.parseInt(st.nextToken());
             
             if(cmd == '0'){
-                Node.union(nodes[first].findRep(),nodes[second].findRep());
+                Node.union(nodes[first],nodes[second]);
             }
             else{
-                sb.append(nodes[first].findRep()==nodes[second].findRep()?'1':'0');
+                sb.append(Node.isUnion(nodes[first],nodes[second])?'1':'0');
             }
         }
     }
@@ -54,14 +54,22 @@ public class Solution {
         }
 
         public static void union(Node first,Node  second){
-            if(first.rank>second.rank){
-                second.findRep().rep = first.findRep();
-                first.findRep().rank+=1;
+            Node firstR = first.findRep();
+            Node secondR = second.findRep();
+            if(firstR.rank>secondR.rank){
+                secondR.rep = firstR;
+            }
+            else if(firstR.rank<secondR.rank){
+                firstR.rep = secondR;
             }
             else{
-                first.findRep().rep = second.findRep();
-                second.findRep().rank+=1;
+                secondR.rep = firstR;
+                firstR.rank+=1;
             }
+        }
+
+        public static boolean isUnion(Node first,Node  second){
+            return(first.findRep()==second.findRep());
         }
 
         public Node<T> findRep(){
