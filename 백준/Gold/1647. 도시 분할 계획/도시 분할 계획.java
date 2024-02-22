@@ -27,18 +27,22 @@ public class Main {
             houses[x].edges.add(new Edge(y, w));
             houses[y].edges.add(new Edge(x, w));
         }
+
         PriorityQueue<Edge> pq = new PriorityQueue<>((o1,o2)->Integer.compare(o1.w, o2.w));
         for(Edge e: houses[1].edges)
             pq.add(e);
+        primHouses[1].rep = true;
         int weight = 0;
         int maxEdgesWeight = 0;
         while (!pq.isEmpty()) {
             //System.out.println("pq.size:"+pq.size());
             Edge e = pq.poll();
-            if(primHouses[e.houseIndex].rep == primHouses[1]) continue;
-            primHouses[e.houseIndex].rep = primHouses[1];
-            for(Edge ee:houses[e.houseIndex].edges)
-                pq.add(ee);
+            if(primHouses[e.houseIndex].rep) continue;
+            primHouses[e.houseIndex].rep = true;
+            for(Edge ee:houses[e.houseIndex].edges){
+                if(!primHouses[ee.houseIndex].rep)
+                    pq.add(ee);
+            }
             weight+=e.w;
             maxEdgesWeight = Math.max(maxEdgesWeight,e.w);
             //System.out.println(e.houseIndex+" "+weight);
@@ -52,11 +56,11 @@ public class Main {
     static class House{
         ArrayList<Edge> edges;
         int index;
-        House rep;
+        boolean rep;
         House(int index){
             edges = new ArrayList<>();
             this.index = index;
-            this.rep = this;
+            this.rep = false;
         }
     }
     static class Edge{
