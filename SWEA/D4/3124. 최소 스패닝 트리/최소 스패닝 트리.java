@@ -13,6 +13,7 @@ public class Solution {
     public static void main(String[] args) throws IOException {
         initFI();
         int T = nextInt();
+        StringBuilder sb = new StringBuilder();
         for(int test_case = 1; test_case <=T; test_case++){
 
             N = nextInt();
@@ -41,8 +42,9 @@ public class Solution {
                 // System.out.println("add "+e.toString());
                 // System.out.println(Arrays.toString(computers));
             }
-            System.out.println("#"+test_case+" "+weight);
+            sb.append('#').append(test_case).append(' ').append(weight).append('\n');
         }
+        System.out.print(sb);
     }
 
 
