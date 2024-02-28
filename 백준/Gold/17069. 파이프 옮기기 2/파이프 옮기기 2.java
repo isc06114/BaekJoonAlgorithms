@@ -1,3 +1,5 @@
+import java.io.DataInputStream;
+import java.io.IOException;
 import java.util.*;
 
 public class Main {
@@ -9,19 +11,18 @@ public class Main {
     private List<int[]> _visited = new ArrayList<>();
 
 
-    	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-        int N = sc.nextInt();
+    	public static void main(String[] args) throws IOException {
+        initFI();
+        int N = nextInt();
         Main m = new Main(N);
         boolean[][] house = new boolean[N][N];
         for(int i = 0; i < N; i++)
             for(int j = 0; j < N; j++)
-                house[i][j] = (sc.nextInt() == 0)? true : false;
+                house[i][j] = (nextInt() == 0)? true : false;
         m.setHouse(house);
         m.start();
         //m.debugDp();
         System.out.print(m.getresult());
-		sc.close();
 	}
 
     public Main(int N){
@@ -95,4 +96,37 @@ public class Main {
             System.err.println();
         }
     }
+
+    	 //Fast IO
+         private static final int MAX_BUFFER_SIZE = 1<<16; 
+         private static DataInputStream inputStream;
+         private static byte[] buffer;
+         private static int curIdx, maxIdx;
+     
+         private static void initFI(){
+             inputStream = new DataInputStream(System.in);
+             buffer = new byte[MAX_BUFFER_SIZE];
+             curIdx = maxIdx = 0;
+         }
+     
+         private static int nextInt() throws IOException{
+             int ret = 0;
+             byte c = read();
+             while(c <= ' ') c= read();
+             boolean neg = (c == '-');
+             if(neg) c = read();
+             do{
+                 ret = ret*10+c-'0';
+             }while((c=read())>='0' && c<='9');
+             if(neg) return (int) -ret;
+             return (int) ret;
+         }
+     
+         private static byte read() throws IOException{
+             if(curIdx == maxIdx){
+                 maxIdx = inputStream.read(buffer,curIdx = 0, MAX_BUFFER_SIZE);
+                 if(maxIdx == -1) buffer[0] = -1;
+             }
+             return buffer[curIdx++];
+         }
 }
