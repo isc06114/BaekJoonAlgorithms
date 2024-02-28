@@ -57,7 +57,7 @@ public class Solution {
             }
             return;
         }
-
+        if(nNodes+nodes.size()-nodeIndex<ans1) return;
         boolean[][] tempMap = new boolean[N][N];
         int[] node = nodes.get(nodeIndex);
         //System.out.println(node[0]+" "+node[1]);
