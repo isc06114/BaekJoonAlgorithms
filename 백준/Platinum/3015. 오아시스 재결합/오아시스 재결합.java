@@ -16,29 +16,8 @@ public class Main {
 		preHe = nextInt();
 		for (int _i = 1; _i < N; _i++) {
 			int height = nextInt();
-			if (height == preHe) {
-				if (!list.isEmpty() && list.get(list.size() - 1)[0] == height) {
-					list.get(list.size() - 1)[1]++;
-				} else {
-					list.add(new int[] { height, 1 });
-				}
-				boolean isSmallP = true;
-				for (int i = list.size() - 1; i >= 0; i--) {
-					if (list.get(i)[0] <= height) {
-						ans += list.get(i)[1];
-						if (list.get(i)[0] != height) {
-							list.remove(i);
-						}
-					} else if (isSmallP) {
-						if (list.get(i)[0] == preHe)
-							ans += list.get(i)[1];
-						else
-							ans++;
-						isSmallP = false;
-					}
-				}
 
-			} else if (height > preHe) { // 증가할 때
+			if (height >= preHe) { // 증가할 때
 				if (!list.isEmpty() && list.get(list.size() - 1)[0] == preHe) {
 					list.get(list.size() - 1)[1]++;
 				} else {
@@ -79,32 +58,6 @@ public class Main {
 		}
 		System.out.println(ans);
 
-	}
-
-	static class CustomLinkedList {
-
-		Node head, tail;
-
-		CustomLinkedList() {
-			head = new Node(-10);
-			tail = new Node(-20);
-			tail.next = head;
-		}
-
-		void add(int height) {
-			tail.next.next = new Node(height);
-			tail.next = tail.next.next;
-		}
-	}
-
-	static class Node {
-		int height;
-		Node next;
-
-		Node(int height) {
-			this.height = height;
-			next = null;
-		}
 	}
 
 	// Fast IO
