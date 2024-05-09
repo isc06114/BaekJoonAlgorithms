@@ -6,18 +6,20 @@ class Main {
     static int ans, map[];
 
     public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        initFI();
         ans = Integer.MAX_VALUE;
         map = new int[10];
         for (int r = 0; r < 10; r++) {
-            String str = br.readLine();
             for (int c = 0; c < 10; c++) {
-                if (str.charAt(c) == 'O') {
+
+                byte ch = read();
+                while (ch != 35 && ch != 79)
+                    ch = read();
+                if (ch == 'O') {
                     map[r] += (1 << c);
                 }
             }
         }
-
         initDfs(-1, 0, map[0], map[1]);
         System.out.println(ans == Integer.MAX_VALUE ? -1 : ans);
     }
@@ -54,4 +56,24 @@ class Main {
         }
     }
 
+    // Fast IO
+    private static final int MAX_BUFFER_SIZE = 120;
+    private static DataInputStream inputStream;
+    private static byte[] buffer;
+    private static int curIdx, maxIdx;
+
+    private static void initFI() {
+        inputStream = new DataInputStream(System.in);
+        buffer = new byte[MAX_BUFFER_SIZE];
+        curIdx = maxIdx = 0;
+    }
+
+    private static byte read() throws IOException {
+        if (curIdx == maxIdx) {
+            maxIdx = inputStream.read(buffer, curIdx = 0, MAX_BUFFER_SIZE);
+            if (maxIdx == -1)
+                buffer[0] = -1;
+        }
+        return buffer[curIdx++];
+    }
 }
